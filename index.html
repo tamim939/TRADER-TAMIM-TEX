@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Password Protected</title>
+  <style>
+    html, body {
+      margin: 0; padding: 0; height: 100%; overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    #background {
+      position: fixed;
+      width: 100%;
+      height: 350%;
+      z-index: -1;
+    }
+
+    .container {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.75);
+      padding: 30px 40px;
+      border-radius: 30px;
+      text-align: center;
+      box-shadow: 0 0 30px cyan;
+      max-width: 420px;
+      width: 100%;
+      box-sizing: border-box;
+      color: white;
+      user-select: none;
+    }
+
+    .container h2 {
+      color: cyan;
+      font-size: 30px;
+      text-shadow: 0 0 10px cyan;
+      margin-bottom: 30px;
+    }
+
+    input[type="password"] {
+      padding: 20px;
+      width: 89%;
+      font-size: 16px;
+      border-radius: 12px;
+      border: none;
+      outline: none;
+      background: #222;
+      color: white;
+      box-shadow: 0 0 14px cyan;
+      margin-bottom: 30px;
+    }
+
+    .notice {
+      font-weight: 600;
+      font-size: 18px;
+      margin: 16px 0;
+      user-select: none;
+      animation: colorChange 6s infinite linear;
+      text-shadow: 0 0 3px currentColor;
+      line-height: 1.4;
+    }
+
+    @keyframes colorChange {
+      0% { color: #ff4d4d; }
+      20% { color: #ffcc00; }
+      40% { color: #00ffcc; }
+      60% { color: #33ccff; }
+      80% { color: #ff66ff; }
+      100% { color: #ff4d4d; }
+    }
+
+    .btn {
+      padding: 14px 0;
+      margin: 10px 6px;
+      font-size: 16px;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      color: white;
+      font-weight: 600;
+      text-transform: uppercase;
+      user-select: none;
+      width: 140px;
+      height: 50px;
+      box-shadow:
+        0 5px 12px rgba(0,0,0,0.35),
+        inset 0 -3px 8px rgba(255,255,255,0.15);
+      transition: 0.3s ease;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .btn:hover {
+      transform: scale(1.07);
+      box-shadow:
+        0 10px 18px rgba(0,0,0,0.5),
+        inset 0 -5px 14px rgba(255,255,255,0.3);
+    }
+
+    .unlock-btn {
+      background: linear-gradient(135deg, #00fff7, #00c9ff);
+      color: #000;
+      box-shadow:
+        0 8px 15px rgba(0, 255, 255, 0.7),
+        inset 0 -4px 10px rgba(0, 255, 255, 0.9);
+    }
+
+    .unlock-btn:hover {
+      background: linear-gradient(135deg, #00e6e1, #00a8d7);
+    }
+
+    .reg-btn {
+      background: linear-gradient(135deg, #ff5f6d, #ffc371);
+      box-shadow:
+        0 8px 15px rgba(255, 87, 87, 0.7),
+        inset 0 -4px 10px rgba(255, 87, 87, 0.9);
+    }
+
+    .reg-btn:hover {
+      background: linear-gradient(135deg, #ff4a4a, #ffb84d);
+    }
+
+    .telegram-btn {
+      background: linear-gradient(135deg, #3a86ff, #0077cc);
+      box-shadow:
+        0 8px 15px rgba(58, 134, 255, 0.7),
+        inset 0 -4px 10px rgba(58, 134, 255, 0.9);
+    }
+
+    .telegram-btn:hover {
+      background: linear-gradient(135deg, #2a6bdb, #005fa3);
+    }
+
+    .developer-name {
+      position: fixed;
+      bottom: 100px;
+      width: 100%;
+      text-align: center;
+      font-size: 30px;
+      text-shadow: 0 0 6px cyan;
+      user-select: none;
+      font-weight: 300;
+      animation: colorChange 5s infinite linear;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="background"></div>
+
+  <div class="container">
+    <h2>Enter Password</h2>
+    <input type="password" id="password" placeholder="Enter your password" />
+
+    <button class="btn unlock-btn" onclick="checkPassword()">Unlock</button>
+
+    <div class="notice" id="notice">
+      আমাদের হ্যাকটি নেওয়ার জন্য অবশ্যই আমাদের লিংকে একাউন্ট থাকতে হবে অ্যাকাউন্ট করে 200 টাকা ডিপোজিট করলেই পেয়ে যাবেন ?
+    </div>
+
+    <button class="btn reg-btn" onclick="location.href='https://dkwin9.com/#/register?invitationCode=62371643494'">Dk Registration</button>
+    <button class="btn telegram-btn" onclick="location.href='https://t.me/TRADER_TAMIM_DK'">Telegram join </button>
+  </div>
+
+  <div class="developer-name">DeveloperBy Tamim Hasan</div>
+
+  <!-- Wrong password sound -->
+  <audio id="wrongSound" src="https://www.soundjay.com/button/beep-10.mp3"></audio>
+
+  <!-- VANTA Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+
+  <script>
+    function checkPassword() {
+      const password = document.getElementById("password").value;
+      const wrongSound = document.getElementById("wrongSound");
+      if (password === "TAMIM$") {
+        window.location.href = "https://4124893.wingoanalyst.com/#/";
+      } else {
+        wrongSound.play();
+        alert("Wrong password!");
+      }
+    }
+
+    // VANTA.NET Background
+    let vantaEffect = VANTA.NET({
+      el: "#background",
+      mouseControls: false,
+      touchControls: false,
+      gyroControls: false,
+      minHeight: 200.00,
+      minWidth: 200.00,
+      scale: 1.0,
+      scaleMobile: 1.0,
+      color: 0xff0055,
+      backgroundColor: 0x000000,
+      points: 12.0,
+      maxDistance: 24.0,
+      spacing: 16.0
+    });
+
+    const colors = [0xff0055, 0x00ffff, 0xffcc00, 0x00ff88, 0x9933ff, 0xff6600];
+    let i = 0;
+    setInterval(() => {
+      vantaEffect.setOptions({ color: colors[i % colors.length] });
+      i++;
+    }, 4000);
+  </script>
+</body>
+</html>
